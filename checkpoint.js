@@ -58,7 +58,15 @@ var objContains = function(obj, prop, value){
 // [Para más información del método: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/isArray]
 
 var countArray = function(array){
-  
+  var suma=0;
+  for (var i = 0; i < array.length; i++) {
+    if  (Array.isArray(array[i])) {
+      suma=suma+countArray(array[i]);
+    }
+    else{
+      suma=suma+array[i];
+    }
+  }return suma;
 }
 
 // ---------------------
