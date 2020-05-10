@@ -74,8 +74,10 @@ var countArray = function(array){
 // ----- LinkedList -----
 
 // EJERCICIO 3
-// Implementar el método size dentro del prototype de LinkedList que deberá retornar el tamaño actual de
-// la LinkedList. En el caso de que la lista se encuentre vacía deberá retornar cero.
+// Implementar el método size dentro del prototype de LinkedList que
+// deberá retornar el tamaño actual de
+// la LinkedList. En el caso de que la lista se encuentre vacía deberá
+// retornar cero.
 // Ejemplo:
 //    var lista = new LinkedList();
 //    lista.size(); --> 0
@@ -86,15 +88,28 @@ var countArray = function(array){
 //    lista.size(); --> 3
 
 LinkedList.prototype.size = function(){
- 
+  if (this.head==null){
+    return 0;}
+  else{
+    var puntero=this.head;
+    var suma=1
+  while (puntero.next!==null){
+    puntero=puntero.next;
+    suma=suma+1}    
+    }
+  return suma;
 }
 
 
 // EJERCICIO 4
-// Implementar el método addInPos dentro del prototype de LinkedList que deberá agregar un elemento en
-// la posición indicada. Ambos datos serán brindados como parámetro (pos, value). Donde "pos" será la
-// posición en la cual se deberá agregar el valor "value". En el caso de que la posición en la que se
-// quiera hacer la inserción no sea válida (Supere el tamaño de la lista actual) debe devolver false.
+// Implementar el método addInPos dentro del prototype de LinkedList
+// que deberá agregar un elemento en
+// la posición indicada. Ambos datos serán brindados como parámetro
+// (pos, value). Donde "pos" será la
+// posición en la cual se deberá agregar el valor "value". En el caso
+// de que la posición en la que se
+// quiera hacer la inserción no sea válida (Supere el tamaño de la
+// lista actual) debe devolver false.
 // Si el nodo fue agregado correctamente devolver true.
 // Aclaración: la posición cero corresponde al head de la LinkedList
 // Ejemplo 1:
@@ -103,24 +118,54 @@ LinkedList.prototype.size = function(){
 //    Ahora la lista quedaría: Head --> [1] --> [2] --> [3] --> [4]
 // Ejemplo 2:
 //    Suponiendo que la lista está vacía: Head --> null
-//    lista.addInPos(2, 3); --> Debería devolver false ya que no es posible agregar en la posición 2
+//    lista.addInPos(2, 3); --> Debería devolver false ya que
+//    no es posible agregar en la posición 2
 //    sin antes tener cargada la posición 0 y 1.
 
 LinkedList.prototype.addInPos = function(pos, value){
-  
+  if (pos > 0 && pos > this.size()) return false;
+    else {
+var nuevonodo = new Node(value);
+  if (pos === 0) {
+    nuevonodo.next = this.head;
+    this.head = nuevonodo;
+    } else {
+    posactual = this.head;
+  var cont = 0;
+    while (cont < pos) {
+      cont=cont+1;
+      posprevia = posactual;
+      posactual = posactual.next;
+    }
+    nuevonodo.next = posactual;
+    posprevia.next = nuevonodo;
+  }
+}
+  return true;
 }
 
+
 // EJERCICIO 5
-// Implementar el método reverse dentro del prototype de LinkedList que invierta el orden de la lista
-// original y retorne una nueva lista con dichos elementos invertidos de posición.
+// Implementar el método reverse dentro del prototype de LinkedList que 
+//invierta el orden de la lista
+// original y retorne una nueva lista con dichos elementos invertidos de
+// posición.
 // Ejemplo:
 //    Lista original: Head --> 1 --> 4 --> 10 --> 13 --> null
 //    Lista nueva luego de aplicar el reverse: Head --> 13 --> 10 --> 4 --> 1 --> null
 
 LinkedList.prototype.reverse = function(){
- 
+  var actual=this.head;
+  var prox=null;
+  var prev=null;
+  while(actual!==null){
+    prox=actual.next;
+    actual.next=prev;
+    prev=actual;
+    actual.next;
+  }
+  this.head=prev;
 }
-
 
 // ----------------------
 
@@ -158,7 +203,8 @@ var cardGame = function(mazoUserA, mazoUserB){
 // ----- BST -----
 
 // EJERCICIO 7
-// Implementar la función generateBST para que a partir de un array recibido como parametro
+// Implementar la función generateBST para que a partir de un 
+// array recibido como parametro
 // genere un BinarySearchTree. Devolver dicho arbol generado.
 // Ejemplo:
 //    - array(16,6,23,2,17,31,14,5);
@@ -172,8 +218,21 @@ var cardGame = function(mazoUserA, mazoUserB){
 //       5
 
 var generateBST = function(array){
- 
+  var nodo=new BinarySearchTree(array);
+    if (valor>this.array[i]){
+      if (this.right!==null){
+      this.right.insert(valor);}
+    else {
+    this.right=nodo;}
+  }
+  else{
+    if (this.left!==null){
+      this.left.insert(valor);}
+    else{
+    this.left=nodo;}
+  }
 }
+
 
 
 // ---------------
@@ -207,14 +266,29 @@ var binarySearch = function (array, target) {
 
 
 var selectionSort = function(array) {
-  
+ for (var i=0; i<array.length; i++) {
+        var min=i;
+        for (var j=i+1; j<array.length; j++) {
+            if (array[min]>array[j]) {
+                min=j;
+            }
+        }
+        if (min!==i) {
+            var aux=array[i];
+            array[i]=array[min];
+            array[min]=aux;
+        }
+    }
+    return array; 
 }
 
 // ----- Closures -----
 
 // EJERCICIO 10
-// Implementar la función closureSum que recibe un parámetro (numFijo) y que debe retornar otra función
-// que también debe recibir un parámetro y debe devolver la suma de este últimom parámetro con numFijo.
+// Implementar la función closureSum que recibe un parámetro
+// (numFijo) y que debe retornar otra función
+// que también debe recibir un parámetro y debe devolver la suma
+// de este últimom parámetro con numFijo.
 // Ejemplo 1:
 //    var sumaCinco = closureSum(5);
 //    sumaCinco(2);  --> Devolverá 7 (Ya que 2 + 5 = 7)
@@ -225,7 +299,7 @@ var selectionSort = function(array) {
 //    sumaDiez(11); --> Devolverá 21 (Ya que 11 + 10 = 21)
 
 function closureSum(numFijo) {
- 
+
 }
 
 // -------------------
