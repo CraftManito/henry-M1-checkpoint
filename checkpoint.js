@@ -123,22 +123,21 @@ LinkedList.prototype.size = function(){
 //    sin antes tener cargada la posición 0 y 1.
 
 LinkedList.prototype.addInPos = function(pos, value){
-  if (pos > 0 && pos > this.size()) return false;
+  if (pos>0 && pos>this.size()) return false;
     else {
-var nuevonodo = new Node(value);
-  if (pos === 0) {
-    nuevonodo.next = this.head;
-    this.head = nuevonodo;
+var nuevonodo=new Node(value);
+  if (pos===0) {
+    nuevonodo.next=this.head;
+    this.head=nuevonodo;
     } else {
-    posactual = this.head;
-  var cont = 0;
-    while (cont < pos) {
+    posactual=this.head;
+  var cont=0;
+    while (cont<pos) {
       cont=cont+1;
-      posprevia = posactual;
-      posactual = posactual.next;
-    }
-    nuevonodo.next = posactual;
-    posprevia.next = nuevonodo;
+      posprevia=posactual;
+      posactual=posactual.next;}
+    nuevonodo.next=posactual;
+    posprevia.next=nuevonodo;
   }
 }
   return true;
@@ -155,16 +154,7 @@ var nuevonodo = new Node(value);
 //    Lista nueva luego de aplicar el reverse: Head --> 13 --> 10 --> 4 --> 1 --> null
 
 LinkedList.prototype.reverse = function(){
-  var actual=this.head;
-  var prox=null;
-  var prev=null;
-  while(actual!==null){
-    prox=actual.next;
-    actual.next=prev;
-    prev=actual;
-    actual.next;
-  }
-  this.head=prev;
+  
 }
 
 // ----------------------
@@ -194,8 +184,26 @@ LinkedList.prototype.reverse = function(){
 //    - mazoUserB = [6,9,10,3,6,4]
 
 var cardGame = function(mazoUserA, mazoUserB){
-
+  var jugadorA;
+  var jugadorB;
+  while(mazoUserA.size()!==0 || mazoUserB.size()!==0){
+    if(mazoUserA.size()===0){
+      return 'B wins!';}
+    if(mazoUserB.size()===0){
+      return 'A wins!';}
+    jugadorA=mazoUserA.dequeue();
+    jugadorB=mazoUserB.dequeue();
+    if(jugadorA>jugadorB){
+        mazoUserA.enqueue(jugadorA);
+        mazoUserA.enqueue(jugadorB);}
+    if(jugadorA<jugadorB){
+        mazoUserB.enqueue(jugadorB);
+        mazoUserB.enqueue(jugadorA);}
+  }
+if(mazoUserA.size()===0 && mazoUserB.size()===0){
+  return 'Game tie!';}
 }
+
 
 // ---------------
 
@@ -218,19 +226,11 @@ var cardGame = function(mazoUserA, mazoUserB){
 //       5
 
 var generateBST = function(array){
-  var nodo=new BinarySearchTree(array);
-    if (valor>this.array[i]){
-      if (this.right!==null){
-      this.right.insert(valor);}
-    else {
-    this.right=nodo;}
-  }
-  else{
-    if (this.left!==null){
-      this.left.insert(valor);}
-    else{
-    this.left=nodo;}
-  }
+   var arbol=new BinarySearchTree(array[0]);
+    array.shift();
+    for (var i = 0; i < array.length; i++) {
+        arbol.insert(array[i]);}  
+    return arbol;
 }
 
 
@@ -252,7 +252,22 @@ var generateBST = function(array){
 
 
 var binarySearch = function (array, target) {
-
+var primero= 0;
+  var ultimo = array.length - 1;
+  var puntero = -1;
+  var ban = false;
+  var mitad=0;
+    while (ban===false && primero<=ultimo) {
+      mitad=parseInt((primero+ultimo)/2);
+      if (array[mitad]===target) {
+          ban=true;
+          puntero=mitad;} 
+      else if (array[mitad] > target){
+        ultimo=mitad - 1;}
+      else {
+        primero=mitad+1;}
+  }
+  return puntero;
   
 }
 
@@ -270,14 +285,12 @@ var selectionSort = function(array) {
         var min=i;
         for (var j=i+1; j<array.length; j++) {
             if (array[min]>array[j]) {
-                min=j;
-            }
+                min=j;}
         }
         if (min!==i) {
             var aux=array[i];
             array[i]=array[min];
-            array[min]=aux;
-        }
+            array[min]=aux;}
     }
     return array; 
 }
@@ -299,7 +312,8 @@ var selectionSort = function(array) {
 //    sumaDiez(11); --> Devolverá 21 (Ya que 11 + 10 = 21)
 
 function closureSum(numFijo) {
-
+  return function(suma){
+    return suma + numFijo;}
 }
 
 // -------------------
